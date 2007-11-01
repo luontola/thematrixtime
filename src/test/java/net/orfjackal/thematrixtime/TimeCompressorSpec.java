@@ -11,14 +11,13 @@ import org.junit.runner.RunWith;
 @RunWith(JDaveRunner.class)
 public class TimeCompressorSpec extends Specification<TimeCompressor> {
 
-    public class TimeCompressorWithNoSpeedup {
+    public class TimeCompressorRunningAtNormalSpeed {
 
         private TimeCompressor compressor;
-        private DummyClock now;
         private long beginning;
 
         public TimeCompressor create() {
-            now = new DummyClock();
+            DummyClock now = new DummyClock();
             beginning = now.time();
             compressor = new TimeCompressor(now, 1.0);
             now.increaseTimeBy(100);
@@ -32,16 +31,19 @@ public class TimeCompressorSpec extends Specification<TimeCompressor> {
         public void shouldIncreaseSystemTimeAtNormalSpeed() throws InterruptedException {
             specify(compressor.systemTime(), should.equal(beginning + 100));
         }
+
+        public void shouldIncreaseRealWorldTimeAtNormalSpeed() throws InterruptedException {
+            specify(compressor.realWorldTime(), should.equal(beginning + 100));
+        }
     }
 
-    public class TimeCompressorWith100PercentSpeedup {
+    public class TimeCompressorRunningAtDoubleSpeed {
 
         private TimeCompressor compressor;
-        private DummyClock now;
         private long beginning;
 
         public TimeCompressor create() {
-            now = new DummyClock();
+            DummyClock now = new DummyClock();
             beginning = now.time();
             compressor = new TimeCompressor(now, 2.0);
             now.increaseTimeBy(100);
@@ -55,16 +57,19 @@ public class TimeCompressorSpec extends Specification<TimeCompressor> {
         public void shouldIncreaseSystemTimeAtNormalSpeed() throws InterruptedException {
             specify(compressor.systemTime(), should.equal(beginning + 100));
         }
+
+        public void shouldIncreaseRealWorldTimeAtNormalSpeed() throws InterruptedException {
+            specify(compressor.realWorldTime(), should.equal(beginning + 100));
+        }
     }
 
-    public class TimeCompressorWith50PercentSlowdown {
+    public class TimeCompressorRunningAtHalfSpeed {
 
         private TimeCompressor compressor;
-        private DummyClock now;
         private long beginning;
 
         public TimeCompressor create() {
-            now = new DummyClock();
+            DummyClock now = new DummyClock();
             beginning = now.time();
             compressor = new TimeCompressor(now, 0.5);
             now.increaseTimeBy(100);
@@ -78,9 +83,13 @@ public class TimeCompressorSpec extends Specification<TimeCompressor> {
         public void shouldIncreaseSystemTimeAtNormalSpeed() throws InterruptedException {
             specify(compressor.systemTime(), should.equal(beginning + 100));
         }
+
+        public void shouldIncreaseRealWorldTimeAtNormalSpeed() throws InterruptedException {
+            specify(compressor.realWorldTime(), should.equal(beginning + 100));
+        }
     }
 
-    public class WhenTheSystemClockIsSynchronized {
+    public class ClockSynchronization {
 
         private TimeCompressor compressor;
         private DummyClock now;
@@ -95,13 +104,35 @@ public class TimeCompressorSpec extends Specification<TimeCompressor> {
             return compressor;
         }
 
-        public void theClockShouldBeUpdatedToTheExpectedTime() {
+        public void shouldUpdateTheClock() {
             specify(now.time(), should.equal(beginning + 50));
         }
 
-        public void theTimeShouldProgressNormallyAfterwards() {
+        public void shouldNotChangeTargetTime() {
+            specify(compressor.targetTime(), should.equal(beginning + 50));
+        }
+
+        public void shouldChangeSystemTimeToTargetTime() {
+            specify(compressor.systemTime(), should.equal(beginning + 50));
+        }
+
+        public void shouldNotChangeRealWorldTime() {
+            specify(compressor.realWorldTime(), should.equal(beginning + 100));
+        }
+
+        public void afterwardsShouldIncreaseTargetTimeAtModifiedSpeed() throws InterruptedException {
             now.increaseTimeBy(100);
-            specify(now.time(), should.equal(beginning + 50 + 100));
+            specify(compressor.targetTime(), should.equal(beginning + 50 + 50));
+        }
+
+        public void afterwardsShouldIncreaseSystemTimeAtNormalSpeed() throws InterruptedException {
+            now.increaseTimeBy(100);
+            specify(compressor.systemTime(), should.equal(beginning + 50 + 100));
+        }
+
+        public void afterwardsShouldIncreaseRealWorldTimeAtNormalSpeed() throws InterruptedException {
+            now.increaseTimeBy(100);
+            specify(compressor.realWorldTime(), should.equal(beginning + 100 + 100));
         }
     }
 }

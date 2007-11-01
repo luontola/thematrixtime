@@ -9,6 +9,7 @@ public class TimeCompressor {
     private Clock clock;
     private double speedup;
     private long startup;
+    private long realWorldTimeOffset = 0;
 
     public TimeCompressor(Clock clock, double speedup) {
         this.clock = clock;
@@ -17,7 +18,14 @@ public class TimeCompressor {
     }
 
     public void synchronizeClock() {
-        clock.changeTimeTo(targetTime());
+        long before = clock.time();
+        long after = targetTime();
+        clock.changeTimeTo(after);
+        realWorldTimeOffset += (before - after);
+    }
+
+    public long realWorldTime() {
+        return systemTime() + realWorldTimeOffset;
     }
 
     public long systemTime() {
@@ -28,11 +36,15 @@ public class TimeCompressor {
         return startup + targetTimeElapsed();
     }
 
+    private long realWorldTimeElapsed() {
+        return realWorldTime() - startup;
+    }
+
     private long systemTimeElapsed() {
         return clock.time() - startup;
     }
 
     private long targetTimeElapsed() {
-        return (long) (systemTimeElapsed() * speedup);
+        return (long) (realWorldTimeElapsed() * speedup);
     }
 }
