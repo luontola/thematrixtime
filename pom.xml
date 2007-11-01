@@ -59,7 +59,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>net.orfjackal.thematrixtime.Main</mainClass>
+                            <mainClass>net.orfjackal.thematrixtime.TheMatrixTime</mainClass>
                             <packageName>net.orfjackal.thematrixtime</packageName>
                         </manifest>
                         <manifestEntries>

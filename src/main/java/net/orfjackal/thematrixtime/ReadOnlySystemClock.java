@@ -4,7 +4,7 @@ package net.orfjackal.thematrixtime;
  * @author Esko Luontola
  * @since 1.11.2007
  */
-public class DefaultClock implements Clock {
+public class ReadOnlySystemClock implements Clock {
 
     public long time() {
         return System.currentTimeMillis();

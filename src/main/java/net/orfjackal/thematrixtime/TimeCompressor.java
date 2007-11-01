@@ -1,5 +1,7 @@
 package net.orfjackal.thematrixtime;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Esko Luontola
  * @since 1.11.2007
@@ -7,13 +9,13 @@ package net.orfjackal.thematrixtime;
 public class TimeCompressor {
 
     private Clock clock;
-    private double speedup;
+    private double speedupRatio;
     private long startup;
     private long realWorldTimeOffset = 0;
 
-    public TimeCompressor(Clock clock, double speedup) {
+    public TimeCompressor(@NotNull Clock clock, double speedupRatio) {
         this.clock = clock;
-        this.speedup = speedup;
+        this.speedupRatio = speedupRatio;
         startup = clock.time();
     }
 
@@ -45,6 +47,6 @@ public class TimeCompressor {
     }
 
     private long targetTimeElapsed() {
-        return (long) (realWorldTimeElapsed() * speedup);
+        return (long) (realWorldTimeElapsed() * speedupRatio);
     }
 }
