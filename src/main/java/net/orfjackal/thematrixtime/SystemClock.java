@@ -58,11 +58,11 @@ public class SystemClock implements Clock {
     }
 
     private static long secondsToMilliseconds(long sec) {
-        return (sec * 1000);
+        return sec * 1000;
     }
 
     private static long nanosecondsToMilliseconds(long usec) {
-        return (usec / 1000) % 1000;
+        return usec / 1000;
     }
 
     private static long millisecondsToSeconds(long msec) {
