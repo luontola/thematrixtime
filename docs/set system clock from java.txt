@@ -1,0 +1,14 @@
+http://www.google.com/search?q=java+set+date&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a
+http://www.google.com/search?q=set+system+clock+from+java&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a
+
+http://www.velocityreviews.com/forums/t140313-how-to-set-system-clock-in-java.html
+http://www.scit.wlv.ac.uk/cgi-bin/mansec?2+adjtime
+http://www.scit.wlv.ac.uk/cgi-bin/mansec?3C+gettimeofday
+
+http://www.rgagnon.com/javadetails/java-0285.html
+http://www.java-tips.org/other-api-tips/jni/set-the-computer-clock.html
+
+misc:
+http://forum.java.sun.com/thread.jspa?threadID=5172593
+http://docs.codehaus.org/pages/viewpage.action?pageId=72602
+http://www.iam.ubc.ca/guides/javatut99/native1.1/implementing/array.html
