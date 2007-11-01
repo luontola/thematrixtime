@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(JDaveRunner.class)
 public class AdjustableClockSpec extends Specification<Clock> {
+
     public class AClockInCurrentTime {
 
         private DummyClock now;
@@ -38,7 +39,6 @@ public class AdjustableClockSpec extends Specification<Clock> {
         private DummyClock now;
         private AdjustableClock clock;
         private long beginning;
-
 
         public Clock create() {
             now = new DummyClock();
