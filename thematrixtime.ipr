@@ -378,6 +378,25 @@
       <SplitterProportionsDataImpl />
     </option>
   </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="svn+ssh://orfjackal@tux/var/svn/orfjackal/thematrixtime/branches" />
+                  <option value="svn+ssh://orfjackal@tux/var/svn/orfjackal/thematrixtime/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="svn+ssh://orfjackal@tux/var/svn/orfjackal/thematrixtime/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
   </component>
