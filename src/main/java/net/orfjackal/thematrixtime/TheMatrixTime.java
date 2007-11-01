@@ -30,8 +30,8 @@ public class TheMatrixTime {
             Date systemTime = new Date(compressor.systemTime());
             Date realWorldTime = new Date(compressor.realWorldTime());
             System.out.println(timeFormat.format(systemTime) + "     " + timeFormat.format(realWorldTime));
-            for (int i = 0; i < 100; i++) {
-                Thread.sleep(10);
+            for (int i = 0; i < 20; i++) {
+                Thread.sleep(50);
                 compressor.synchronizeClock();
             }
         }
