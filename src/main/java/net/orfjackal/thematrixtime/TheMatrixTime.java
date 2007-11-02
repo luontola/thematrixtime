@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class TheMatrixTime {
 
     private static final String APP_NAME = "The Matrix Time";
-    private static final String APP_VERSION = "1.0 (2007-11-02)";
+    private static final String APP_VERSION = "1.0 (2007-11-02)";   // TODO: get version and name from POM
     private static final String COPYRIGHT = "Copyright (c) 2007 Esko Luontola, www.orfjackal.net";
 
     private static final int PRINT_TIME_INTERVAL = 2000;
