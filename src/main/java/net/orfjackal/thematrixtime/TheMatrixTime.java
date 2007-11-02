@@ -17,7 +17,7 @@ public class TheMatrixTime {
     private static final String COPYRIGHT = "Copyright (c) 2007 Esko Luontola, www.orfjackal.net";
 
     private static final int PRINT_TIME_INTERVAL = 2000;
-    private static final int WAIT_BETWEEN_SYNC = 50;
+    private static final int WAIT_BETWEEN_SYNC = 50;    // TODO: ask the user for the interval to use
 
     @SuppressWarnings({"InfiniteLoopStatement"})
     public static void main(String[] args) throws InterruptedException {
@@ -33,6 +33,7 @@ public class TheMatrixTime {
         System.out.println();
         System.out.println("SYSTEM TIME      REAL TIME");
         while (true) {
+            // TODO: run this in its own thread and allow input from user to stop the process
             printCurrentTime(compressor);
             synchronizeAndWait(compressor);
         }
