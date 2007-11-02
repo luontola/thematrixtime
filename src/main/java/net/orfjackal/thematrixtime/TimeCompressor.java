@@ -18,6 +18,7 @@ public class TimeCompressor {
     }
 
     public void synchronizeClock() {
+        // TODO: try to optimize the update process so that it does not hang other apps
         long before = clock.time();
         long after = targetTime();
         clock.changeTimeTo(after);
