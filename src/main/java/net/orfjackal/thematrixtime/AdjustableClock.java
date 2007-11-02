@@ -7,14 +7,14 @@ package net.orfjackal.thematrixtime;
 public class AdjustableClock implements Clock {
 
     private long offset;
-    private Clock clock;
+    private Clock readOnlyClock;
 
-    public AdjustableClock(Clock clock) {
-        this.clock = clock;
+    public AdjustableClock(Clock readOnlyClock) {
+        this.readOnlyClock = readOnlyClock;
     }
 
     public long time() {
-        return clock.time() + offset;
+        return readOnlyClock.time() + offset;
     }
 
     public void changeTimeTo(long newTime) {

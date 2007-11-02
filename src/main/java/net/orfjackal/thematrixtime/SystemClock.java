@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * Changes the system clock, but supports only Linux.
+ *
  * @author Esko Luontola
  * @since 1.11.2007
  */

@@ -19,6 +19,8 @@ public class TheMatrixTime {
     private static final int PRINT_TIME_INTERVAL = 2000;
     private static final int WAIT_BETWEEN_SYNC = 50;    // TODO: ask the user for the interval to use
 
+    private static final Scanner in = new Scanner(System.in);
+
     @SuppressWarnings({"InfiniteLoopStatement"})
     public static void main(String[] args) throws InterruptedException {
         System.out.println(APP_NAME + " " + APP_VERSION);
@@ -33,7 +35,7 @@ public class TheMatrixTime {
         System.out.println();
         System.out.println("SYSTEM TIME      REAL TIME");
         while (true) {
-            // TODO: run this in its own thread and allow input from user to stop the process
+            // TODO: run this in its own thread and allow input from user to stop the process, or to change the configuration
             printCurrentTime(compressor);
             synchronizeAndWait(compressor);
         }
@@ -55,7 +57,6 @@ public class TheMatrixTime {
     }
 
     private static double askSpeedupRatio() {
-        Scanner in = new Scanner(System.in);
         while (true) {
             try {
                 double ratio = in.nextDouble();
