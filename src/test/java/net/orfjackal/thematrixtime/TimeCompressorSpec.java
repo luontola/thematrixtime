@@ -3,6 +3,7 @@ package net.orfjackal.thematrixtime;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
+import org.jmock.Expectations;
 
 /**
  * @author Esko Luontola
@@ -133,6 +134,29 @@ public class TimeCompressorSpec extends Specification<TimeCompressor> {
         public void afterwardsShouldIncreaseRealWorldTimeAtNormalSpeed() throws InterruptedException {
             now.increaseTimeBy(100);
             specify(compressor.realWorldTime(), should.equal(beginning + 100 + 100));
+        }
+    }
+
+    public class WhenNoTimeHasPassedSinceTheLastSynchronization {
+
+        private TimeCompressor compressor;
+        private Clock now;
+
+        public TimeCompressor create() {
+            now = mock(Clock.class);
+            checking(new Expectations() {{
+                one(now).time(); will(returnValue(0L));
+                one(now).changeTimeTo(0L);
+                allowing(now).time(); will(returnValue(1L));
+            }});
+            compressor = new TimeCompressor(now, 0.5);
+            compressor.synchronizeClock();
+            return compressor;
+        }
+
+        public void shouldNotSynchronizeOnTheSecondRun() {
+            // expectations in create()
+            compressor.synchronizeClock();
         }
     }
 }
