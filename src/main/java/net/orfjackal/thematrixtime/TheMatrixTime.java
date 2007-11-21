@@ -1,9 +1,12 @@
 package net.orfjackal.thematrixtime;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.Properties;
 import java.util.Scanner;
 
 /**
@@ -13,7 +16,6 @@ import java.util.Scanner;
 public class TheMatrixTime {
 
     private static final String APP_NAME = "The Matrix Time";
-    private static final String APP_VERSION = "1.0 (2007-11-02)";   // TODO: get version and name from POM
     private static final String COPYRIGHT = "Copyright (c) 2007 Esko Luontola, www.orfjackal.net";
 
     private static final int PRINT_TIME_INTERVAL = 2000;
@@ -22,17 +24,14 @@ public class TheMatrixTime {
 
     @SuppressWarnings({"InfiniteLoopStatement"})
     public static void main(String[] args) throws InterruptedException {
-        System.out.println(APP_NAME + " " + APP_VERSION);
+        System.out.println(APP_NAME + " " + appVersion());
         System.out.println(COPYRIGHT);
         System.out.println();
-        System.out.print("Desired time speedup ratio: ");
 
         double ratio = askSpeedupRatio();
+        int waitTime = askWaitBetweenSync();
         Clock clock = availableClock();
         TimeCompressor compressor = new TimeCompressor(clock, ratio);
-
-        System.out.print("Wait time between time sync: ");
-        int waitTime = askWaitBetweenSync();
 
         System.out.println();
         System.out.println("SYSTEM TIME      REAL TIME");
@@ -59,6 +58,7 @@ public class TheMatrixTime {
     }
 
     private static double askSpeedupRatio() {
+        System.out.print("Desired time speedup ratio: ");
         while (true) {
             try {
                 double ratio = in.nextDouble();
@@ -76,6 +76,7 @@ public class TheMatrixTime {
     }
 
     private static int askWaitBetweenSync() {
+        System.out.print("Wait time between time sync in milliseconds: ");
         while (true) {
             try {
                 int waitTime = in.nextInt();
@@ -101,6 +102,22 @@ public class TheMatrixTime {
             System.err.println("ERROR: " + e.getMessage());
             System.err.println("       Falling back to a pseudo clock which does not change the system time");
             return new AdjustableClock(new ReadOnlySystemClock());
+        }
+    }
+
+    private static String appVersion() {
+        InputStream pom = TheMatrixTime.class
+                .getResourceAsStream("/META-INF/maven/net.orfjackal.thematrixtime/thematrixtime/pom.properties");
+        if (pom == null) {
+            return "";
+        }
+        try {
+            Properties p = new Properties();
+            p.load(pom);
+            return p.getProperty("version");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
         }
     }
 }
