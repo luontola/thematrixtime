@@ -17,7 +17,6 @@ public class TheMatrixTime {
     private static final String COPYRIGHT = "Copyright (c) 2007 Esko Luontola, www.orfjackal.net";
 
     private static final int PRINT_TIME_INTERVAL = 2000;
-    private static final int WAIT_BETWEEN_SYNC = 50;    // TODO: ask the user for the interval to use
 
     private static final Scanner in = new Scanner(System.in);
 
@@ -32,12 +31,15 @@ public class TheMatrixTime {
         Clock clock = availableClock();
         TimeCompressor compressor = new TimeCompressor(clock, ratio);
 
+        System.out.print("Wait time between time sync: ");
+        int waitTime = askWaitBetweenSync();
+
         System.out.println();
         System.out.println("SYSTEM TIME      REAL TIME");
         while (true) {
             // TODO: run this in its own thread and allow input from user to stop the process, or to change the configuration
             printCurrentTime(compressor);
-            synchronizeAndWait(compressor);
+            synchronizeAndWait(compressor, waitTime);
         }
     }
 
@@ -48,10 +50,10 @@ public class TheMatrixTime {
         System.out.println(timeFormat.format(systemTime) + "     " + timeFormat.format(realWorldTime));
     }
 
-    private static void synchronizeAndWait(TimeCompressor compressor) throws InterruptedException {
-        int syncSteps = PRINT_TIME_INTERVAL / WAIT_BETWEEN_SYNC;
+    private static void synchronizeAndWait(TimeCompressor compressor, int waitBetweenSync) throws InterruptedException {
+        int syncSteps = PRINT_TIME_INTERVAL / waitBetweenSync;
         for (int i = 0; i < syncSteps; i++) {
-            Thread.sleep(WAIT_BETWEEN_SYNC);
+            Thread.sleep(waitBetweenSync);
             compressor.synchronizeClock();
         }
     }
@@ -68,7 +70,24 @@ public class TheMatrixTime {
 
             } catch (InputMismatchException e) {
                 in.next(); // discard invalid token
-                System.out.print("Not a number, enter a decimal number: ");
+                System.out.print("Not a number, retry: ");
+            }
+        }
+    }
+
+    private static int askWaitBetweenSync() {
+        while (true) {
+            try {
+                int waitTime = in.nextInt();
+                if (waitTime <= 0) {
+                    System.out.print("Enter an integer larger than zero: ");
+                    continue;
+                }
+                return waitTime;
+
+            } catch (InputMismatchException e) {
+                in.next(); // discard invalid token
+                System.out.print("Not a number, retry: ");
             }
         }
     }
