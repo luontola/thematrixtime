@@ -20,7 +20,9 @@ public class TheMatrixTime {
         System.out.print("Desired time speedup ratio: ");
 
         double ratio = in.nextDouble();
-        TimeCompressor compressor = new TimeCompressor(new AdjustableClock(new ReadOnlySystemClock()), ratio);
+//        Clock clock = new AdjustableClock(new ReadOnlySystemClock());
+        Clock clock = new SystemClock();
+        TimeCompressor compressor = new TimeCompressor(clock, ratio);
         DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss.SSS");
 
         System.out.println("SYSTEM TIME      REAL TIME");

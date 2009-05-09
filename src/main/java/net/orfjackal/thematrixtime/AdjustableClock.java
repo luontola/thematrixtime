@@ -1,7 +1,5 @@
 package net.orfjackal.thematrixtime;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Esko Luontola
  * @since 1.11.2007
@@ -11,7 +9,7 @@ public class AdjustableClock implements Clock {
     private long offset;
     private Clock clock;
 
-    public AdjustableClock(@NotNull Clock clock) {
+    public AdjustableClock(Clock clock) {
         this.clock = clock;
     }
 
