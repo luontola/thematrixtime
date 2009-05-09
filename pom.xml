@@ -9,13 +9,22 @@
     <packaging>jar</packaging>
 
     <name>The Matrix Time</name>
-    <description>Slows down or speeds up the system's clock</description>
-    <url>http://www.orfjackal.net</url>
+    <description>Slows down or speeds up the system clock.</description>
+    <url>http://github.com/orfjackal/thematrixtime</url>
+    <inceptionYear>2007</inceptionYear>
+
     <developers>
         <developer>
+            <id>orfjackal</id>
             <name>Esko Luontola</name>
+            <url>http://www.orfjackal.net/</url>
         </developer>
     </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/orfjackal/thematrixtime.git</connection>
+        <url>http://github.com/orfjackal/thematrixtime</url>
+    </scm>
 
     <repositories>
         <repository>
